@@ -8,7 +8,15 @@ class Player:
 
 
 class TicTacToe:
+
     def __init__(self, player1, player2):
+        self.WIN_SCHEMES = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ]
         self.game = [None, None, None, None, None, None, None, None, None]
         self.playerToPlay = player1
         self.otherPlayer = player2
@@ -27,22 +35,16 @@ class TicTacToe:
               " | " + str(res[6]) + " | " + str(res[7]) + " | " + str(res[8]) + " | \n")
 
     def has_winner(self):
-        WIN_SCHEMES = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 4, 8],
-            [2, 4, 6]
-        ]
 
         t = self.game
         result = False
-        for win_scheme in WIN_SCHEMES:
+        for win_scheme in self.WIN_SCHEMES:
             if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]]:
                 result = True
                 break
 
         return result
+
 
     def reset(self, _player):
         self.game = [None, None, None, None, None, None, None, None, None]
@@ -68,4 +70,37 @@ class TicTacToe:
         rdmNumber = random.sample(self.allowed_moves(),1)
         self.game[rdmNumber[0]] = self.otherPlayer.symbole
         self.__str__()
+
+    def find_winning_move(self, player):
+        has_won = False
+        move = self.allowed_moves()[0]
+        i = 0
+        while not has_won or i < len(self.allowed_moves()):
+            self.game[move] = player.symbole
+            if self.has_winner():
+                has_won = True
+            else:
+                self.undo()
+                i = i + 1
+                move = self.allowed_moves()[i]
+        if has_won:
+            return move
+
+    def opponent_next(self, playerWhoHasToWin, playerWhoHasToLose):
+        has_won = False
+        move = self.allowed_moves()[0]
+        i = 0
+        while not has_won or i < len(self.allowed_moves()):
+            self.game[move] = player.symbole
+            if self.has_winner():
+                has_won = True
+            else:
+                self.undo()
+                i = i + 1
+                move = self.allowed_moves()[i]
+        if has_won:
+            return move
+
+        while
+
 
