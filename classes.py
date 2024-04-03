@@ -20,6 +20,7 @@ class TicTacToe:
         self.game = [None, None, None, None, None, None, None, None, None]
         self.playerToPlay = player1
         self.otherPlayer = player2
+        self.isGameOn = True
 
     def play(self, caseNumber, player):
         if (self.game[caseNumber] == None):
@@ -101,3 +102,11 @@ class TicTacToe:
             return move
 
         return random.sample(self.allowed_moves(), 1)
+
+    def end_game(self):
+        if self.has_winner(self.playerToPlay):
+            print("Player " + self.playerToPlay.name + " has won")
+        else:
+            raise ValueError("Erreur système")
+
+

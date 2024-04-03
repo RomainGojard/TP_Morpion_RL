@@ -9,7 +9,7 @@ game.opponent_random()
 
 def main() :
     while True:
-        print("LOL")
+
 
 #main()
 
