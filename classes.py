@@ -23,8 +23,9 @@ class TicTacToe:
         self.isGameOn = True
 
     def play(self, caseNumber, player):
-        if (self.game[caseNumber] == None):
+        if self.game[caseNumber] is None:
             self.game[caseNumber] = player.symbole
+            self.playerToPlay, self.otherPlayer = self.otherPlayer, self.playerToPlay
         else:
             raise ValueError("Case already played !")
 
@@ -42,8 +43,8 @@ class TicTacToe:
             if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]]:
                 result = True
                 break
-            if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]] and t[win_scheme[0]] != None:
-                if player == None or player.symbole == t[win_scheme[0]]:
+            if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]] and t[win_scheme[0]] is not None:
+                if player is None or player.symbole == t[win_scheme[0]]:
                     result = True
                     break
 
@@ -54,13 +55,13 @@ class TicTacToe:
         self.playerToPlay = _player
 
     def is_draw(self):
-        if ((None in self.game) or self.has_winner()):
+        if (None in self.game) or self.has_winner():
             return False
         else:
             return True
 
     def undo(self, caseNumber, player):
-        if (self.game[caseNumber] == player.symbole):
+        if self.game[caseNumber] == player.symbole:
             self.game[caseNumber] = None
         else:
             raise ValueError("L'emplacement n'a jamais été joué ou n'a pas été joué par vous")
@@ -70,8 +71,7 @@ class TicTacToe:
         return [index for index, valeur in enumerate(self.game) if valeur is None]
 
     def opponent_random(self, player):
-        rdmNumber = random.sample(self.allowed_moves(), 1)
-        self.game[rdmNumber[0]] = player.symbole
+        self.play(random.sample(self.allowed_moves(), 1), player)
 
     def find_winning_move(self, player):
         has_won = False
