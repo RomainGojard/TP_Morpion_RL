@@ -106,7 +106,9 @@ class TicTacToe:
     def end_game(self):
         if self.has_winner(self.playerToPlay):
             print("Player " + self.playerToPlay.name + " has won")
+            self.isGameOn = False
         else:
+            self.isGameOn = False
             raise ValueError("Erreur système")
 
 
