@@ -50,6 +50,13 @@ class TicTacToe:
         else:
             return True
 
+    def undo(self, caseNumber, player):
+        if (self.game[caseNumber] == player.symbole):
+            self.game[caseNumber] = None
+        else :
+            raise ValueError("L'emplacement n'a jamais été joué ou n'a pas été joué par vous")
+
+
 
 player = Player("test-user", "X")
 game = TicTacToe(player)
