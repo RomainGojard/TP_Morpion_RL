@@ -39,6 +39,10 @@ class TicTacToe:
                 break
 
         return result
+    
+    def reset(self, _player):
+        self.game = [None, None, None, None, None, None, None, None, None]
+        self.playerToPlay = _player
 
 
 player = Player("test-user","X")
