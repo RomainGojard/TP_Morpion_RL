@@ -1,3 +1,6 @@
+import random
+
+
 class Player:
     def __init__(self, name, symbole):
         self.name = name
@@ -60,4 +63,12 @@ class TicTacToe:
     # returns the positions of the empty tiles (= playable positions)
     def allowed_moves(self):
         return [index for index, valeur in enumerate(self.game) if valeur is None]
+    
+    def opponent_random(self):
+        rdmNumber = random.randrange(0, self.game.__len__())
+        if(self.game[rdmNumber] != None):
+            self.opponent_random(self)
+        else:
+            self.game[rdmNumber] = self.otherPlayer.symbole
+            self.__str__()
 
