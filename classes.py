@@ -65,10 +65,7 @@ class TicTacToe:
         return [index for index, valeur in enumerate(self.game) if valeur is None]
     
     def opponent_random(self):
-        rdmNumber = random.randrange(0, self.game.__len__())
-        if(self.game[rdmNumber] != None):
-            self.opponent_random(self)
-        else:
-            self.game[rdmNumber] = self.otherPlayer.symbole
-            self.__str__()
+        rdmNumber = random.sample(self.allowed_moves(),1)
+        self.game[rdmNumber[0]] = self.otherPlayer.symbole
+        self.__str__()
 
