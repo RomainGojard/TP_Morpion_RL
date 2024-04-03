@@ -5,13 +5,14 @@ class Player:
 
 
 class TicTacToe:
-    def __init__(self, player):
+    def __init__(self, player1, player2):
         self.game = [None, None, None, None, None, None, None, None, None]
-        self.playerToPlay = player
+        self.playerToPlay = player1
+        self.otherPlayer = player2
 
-    def play(self, caseNumber, symbole):
+    def play(self, caseNumber, player):
         if (self.game[caseNumber] == None):
-            self.game[caseNumber] = symbole
+            self.game[caseNumber] = player.symbole
         else:
             raise ValueError("Case already played !")
 
@@ -60,7 +61,3 @@ class TicTacToe:
     def allowed_moves(self):
         return [index for index, valeur in enumerate(self.game) if valeur is None]
 
-
-player = Player("test-user", "X")
-game = TicTacToe(player)
-game.__str__()
