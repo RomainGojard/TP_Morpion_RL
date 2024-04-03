@@ -34,14 +34,14 @@ class TicTacToe:
               " | " + str(res[3]) + " | " + str(res[4]) + " | " + str(res[5]) + " | \n" +
               " | " + str(res[6]) + " | " + str(res[7]) + " | " + str(res[8]) + " | \n")
 
-    def has_winner(self, player = None):
+    def has_winner(self):
+
         t = self.game
         result = False
         for win_scheme in self.WIN_SCHEMES:
-            if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]] and t[win_scheme[0]] != None:
-                if player == None or player.symbole == t[win_scheme[0]]:
-                    result = True
-                    break
+            if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]]:
+                result = True
+                break
 
         return result
 
@@ -75,7 +75,7 @@ class TicTacToe:
         i = 0
         while not has_won or i < len(self.allowed_moves()):
             self.game[move] = player.symbole
-            if self.has_winner():
+            if self.has_winner(player):
                 has_won = True
             else:
                 self.undo()
