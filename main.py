@@ -57,6 +57,9 @@ class TicTacToe:
             raise ValueError("L'emplacement n'a jamais été joué ou n'a pas été joué par vous")
 
 
+    # returns the positions of the empty tiles (= playable positions)
+    def allowed_moves(self):
+        return [index for index, valeur in enumerate(self.game) if valeur is None]
 
 player = Player("test-user", "X")
 game = TicTacToe(player)
