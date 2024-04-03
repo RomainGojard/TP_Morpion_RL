@@ -5,6 +5,7 @@ class Player:
     def __init__(self, name, symbole):
         self.name = name
         self.symbole = symbole
+        self.score = 0
 
 
 class TicTacToe:
@@ -117,6 +118,7 @@ class TicTacToe:
         if self.has_winner(self.otherPlayer):
             print("Player " + self.playerToPlay.name + " has won")
             self.isGameOn = False
+            self.otherPlayer.score += 1
         elif self.is_draw():
             "DRAW"
 
