@@ -36,13 +36,11 @@ class TicTacToe:
               " | " + str(res[3]) + " | " + str(res[4]) + " | " + str(res[5]) + " | \n" +
               " | " + str(res[6]) + " | " + str(res[7]) + " | " + str(res[8]) + " | \n")
 
-    def has_winner(self, player = None):
+    def has_winner(self, player=None):
         t = self.game
         result = False
         for win_scheme in self.WIN_SCHEMES:
-            if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]]:
-                result = True
-                break
+
             if t[win_scheme[0]] == t[win_scheme[1]] == t[win_scheme[2]] and t[win_scheme[0]] is not None:
                 if player is None or player.symbole == t[win_scheme[0]]:
                     result = True
@@ -50,9 +48,11 @@ class TicTacToe:
 
         return result
 
-    def reset(self, _player):
+    def reset(self, player1, player2):
         self.game = [None, None, None, None, None, None, None, None, None]
-        self.playerToPlay = _player
+        self.playerToPlay = player1
+        self.otherPlayer = player2
+        self.isGameOn = True
 
     def is_draw(self):
         if (None in self.game) or self.has_winner():
@@ -63,6 +63,7 @@ class TicTacToe:
     def undo(self, caseNumber, player):
         if self.game[caseNumber] == player.symbole:
             self.game[caseNumber] = None
+            self.playerToPlay, self.otherPlayer = self.otherPlayer, self.playerToPlay
         else:
             raise ValueError("L'emplacement n'a jamais été joué ou n'a pas été joué par vous")
 
@@ -71,20 +72,27 @@ class TicTacToe:
         return [index for index, valeur in enumerate(self.game) if valeur is None]
 
     def opponent_random(self, player):
-        self.play(random.sample(self.allowed_moves(), 1), player)
+        self.play(random.sample(self.allowed_moves(), 1)[0], player)
 
     def find_winning_move(self, player):
         has_won = False
         move = self.allowed_moves()[0]
         i = 0
-        while not has_won or i < len(self.allowed_moves()):
-            self.game[move] = player.symbole
+        while not has_won and i < len(self.allowed_moves()):
+            move = self.allowed_moves()[i]
+            try:
+                self.play(move, player)
+
+            except:
+                i = i + 1
+                move = self.allowed_moves()[i]
+
+            self.undo(move, player)
+
             if self.has_winner(player):
                 has_won = True
             else:
-                self.undo(move, player)
                 i = i + 1
-                move = self.allowed_moves()[i]
         if has_won:
             return move
         else:
@@ -94,21 +102,24 @@ class TicTacToe:
         move = self.find_winning_move(playerWhoHasToWin)
 
         if move != False:
-            return move
+            self.play(move, playerWhoHasToWin)
 
-        move = self.find_winning_move(playerWhoHasToLose)
+        else:
+            move = self.find_winning_move(playerWhoHasToLose)
 
-        if move != False:
-            return move
+            if move != False:
+                self.play(move, playerWhoHasToWin)
 
-        return random.sample(self.allowed_moves(), 1)
+            else:
+                self.opponent_random(playerWhoHasToWin)
 
     def end_game(self):
-        if self.has_winner(self.playerToPlay):
+        if self.has_winner(self.otherPlayer):
             print("Player " + self.playerToPlay.name + " has won")
             self.isGameOn = False
+        elif self.is_draw():
+            "DRAW"
+
         else:
             self.isGameOn = False
             raise ValueError("Erreur système")
-
-
