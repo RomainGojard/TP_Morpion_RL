@@ -64,11 +64,10 @@ class TicTacToe:
     # returns the positions of the empty tiles (= playable positions)
     def allowed_moves(self):
         return [index for index, valeur in enumerate(self.game) if valeur is None]
-    
-    def opponent_random(self):
-        rdmNumber = random.sample(self.allowed_moves(),1)
-        self.game[rdmNumber[0]] = self.otherPlayer.symbole
-        self.__str__()
+
+    def opponent_random(self, player):
+        rdmNumber = random.sample(self.allowed_moves(), 1)
+        self.game[rdmNumber[0]] = player.symbole
 
     def find_winning_move(self, player):
         has_won = False
@@ -84,22 +83,18 @@ class TicTacToe:
                 move = self.allowed_moves()[i]
         if has_won:
             return move
+        else:
+            return False
 
     def opponent_next(self, playerWhoHasToWin, playerWhoHasToLose):
-        has_won = False
-        move = self.allowed_moves()[0]
-        i = 0
-        while not has_won or i < len(self.allowed_moves()):
-            self.game[move] = player.symbole
-            if self.has_winner():
-                has_won = True
-            else:
-                self.undo()
-                i = i + 1
-                move = self.allowed_moves()[i]
-        if has_won:
+        move = self.find_winning_move(playerWhoHasToWin)
+
+        if move != False:
             return move
 
-        while
+        move = self.find_winning_move(playerWhoHasToLose)
 
+        if move != False:
+            return move
 
+        return random.sample(self.allowed_moves(), 1)
