@@ -12,10 +12,13 @@ class TicTacToe:
 
     def __init__(self, player1, player2):
         self.WIN_SCHEMES = [
-            [0, 1, 2],
+            [0, 1, 2], # lignes
             [3, 4, 5],
             [6, 7, 8],
-            [0, 4, 8],
+            [0, 3, 6], # colonnes
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8], # diagonales
             [2, 4, 6]
         ]
         self.game = [None, None, None, None, None, None, None, None, None]
