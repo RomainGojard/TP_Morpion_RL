@@ -56,7 +56,8 @@ class TicTacToe:
         self.game = [None, None, None, None, None, None, None, None, None]
         self.playerToPlay = player1
         self.otherPlayer = player2
-        self.isGameOn = True
+        if player1.score < 10000 and player2.score < 10000:
+            self.isGameOn = True
 
     def is_draw(self):
         if (None in self.game) or self.has_winner():
