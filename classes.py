@@ -91,12 +91,13 @@ class TicTacToe:
                 i = i + 1
                 move = self.allowed_moves()[i]
 
-            self.undo(move, player)
-
             if self.has_winner(player):
                 has_won = True
             else:
                 i = i + 1
+
+            self.undo(move, player)
+
         if has_won:
             return move
         else:

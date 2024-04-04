@@ -3,7 +3,7 @@ from classes import TicTacToe
 
 ai_random = Player("AI RANDOM", "X")
 player_de_fou = Player("Player de fou malade", "O")
-game = TicTacToe(ai_random, player_de_fou)
+game = TicTacToe(player_de_fou, ai_random)
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
 
         if game.has_winner() or game.is_draw():
             game.end_game()
-            game.reset(ai_random, player_de_fou)
+            game.reset(player_de_fou, ai_random)
 
         print("Score " + player_de_fou.name + " " + str(player_de_fou.score) + "  |  " + ai_random.name + " " + str(ai_random.score))
 
